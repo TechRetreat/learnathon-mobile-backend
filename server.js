@@ -2,8 +2,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var constants = require('./const.js')
 
-mongoose.connect('mongodb://127.0.0.1:27017/nodetest1');
+var db = 'mongodb://'+ constants.name +':'+ constants.pword +'@ds013738.mlab.com:13738/scavenger';
+
+mongoose.connect(db);
 // Express
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -11,8 +14,14 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;
 
+
 var Cache = require('./app/models/cache')
 var User = require('./app/models/user')
+
+
+app.get('/', function(req, res) {
+  res.json({message:"things are working"});
+});
 
 // Router
 var router = express.Router();
@@ -138,8 +147,9 @@ router.post('/users',function(req, res) {
 // User methods
 router.put('/users/:user_id/find/:cache_id', function(req, res) {
   User.findById(req.params.user_id, function(err, user) {
-    if (err)
+    if (err) {
       res.send(err);
+    }
     Cache.findById(req.params.cache_id, function(err, cache) {
       if (err)
         res.send(err);
