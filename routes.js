@@ -16,38 +16,41 @@ router.use(function(req, res, next) {
 
 // Caches
 router.get('/caches',function(req, res) {
-  console.log("GETting cahces");
-  console.log("with request body " + req.body);
-  console.log("stop");
+  console.log('Received GET request to /caches');
+  console.log('Request body: ' + req.body);
   Cache.find(function(err, caches) {
+    console.log('Found list of all caches');
     if (err) {
-      console.log(err);
+      console.log('Failed with errror: ' + err);
       res.send(err);
     }
 
+    console.log('Successfuly returned caches: ' + caches);
     res.json(caches);
   });
 });
 
 router.get('/caches/:cache_id',function(req, res) {
+  console.log('Received GET request to /caches/:cache_id');
+  console.log('Request body: ' + req.body);
+  console.log("Finding cache with id " + req.params.cache_id);
   Cache.findById(req.params.cache_id, function(err, cache) {
-    console.log("Finding cache with id " + req.params.cache_id);
     if (err) {
+      console.log('Failed with error: ' + err);
       res.send(err);
     }
 
-    console.log(cache.name);
-    console.log(cache.description);
-
+    console.log('Found cache with name: ' + cache.name);
     res.json(cache);
 
   });
 });
 
 router.post('/caches',function(req, res) {
-    var cache = new Cache();
+    console.log('Making a POST request to /caches');
+    console.log('Request body: ' + req.body);
 
-    console.log("Making a POST request with a body " + req.body);
+    var cache = new Cache();
 
     cache.name = req.body.name;
     cache.description = req.body.description;
@@ -55,16 +58,14 @@ router.post('/caches',function(req, res) {
     cache.location.latitude = req.body.latitude;
     cache.location.longitude = req.body.longitude;
 
-    console.log("Cache name set to " + cache.name);
-
     cache.save(function(err) {
-      console.log("Saving caches");
       if (err) {
-        console.log(err);
+        console.log('Failed with error: ' + err);
         res.send(err);
       }
 
-      res.json({message: 'Cache created!' });
+      console.log("Cache created");
+      res.json({message: 'Cache created' });
     });
 });
 
@@ -89,8 +90,11 @@ router.put('/caches/:cache_id', function(req, res) {
 
 // Users
 router.get('/users',function(req, res) {
+  console.log('Received GET request to /users');
+  console.log('Request body: ' + req.body);
   User.find(function(err, caches) {
     if (err) {
+      console.log('Failed with error: ' + err);
       res.send(err);
     }
 
@@ -99,8 +103,12 @@ router.get('/users',function(req, res) {
 });
 
 router.get('/users/:user_id',function(req, res) {
+  console.log('Received GET request to /users/:user_id');
+  console.log('Request body: ' + req.body);
+  console.log('Finding user with id: ' + req.params.user_id);
   User.findById(req.params.user_id, function(err, user) {
     if (err) {
+      console.log('Failed with error: ' + err);
       res.send(err);
     }
 
@@ -110,19 +118,22 @@ router.get('/users/:user_id',function(req, res) {
 });
 
 router.post('/users',function(req, res) {
-    var user = new User();
+  console.log('Received POST request to /users');
+  console.log('Request body: ' + req.body);
 
-    user.name = req.body.name;
-    user.found_caches = [];
+  var user = new User();
 
-    user.save(function(err) {
-      if (err) {
-        console.log(err);
-        res.send(err);
-      }
+  user.name = req.body.name;
+  user.found_caches = [];
 
-      res.json({message: 'User created!' });
-    });
+  user.save(function(err) {
+    if (err) {
+      console.log('Failed with error: ' + err);
+      res.send(err);
+    }
+
+    res.json({message: 'User created!' });
+  });
 });
 
 // User methods
