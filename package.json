@@ -5,9 +5,5 @@
     "express":"~4.0.0",
     "mongoose":"~3.6.13",
     "body-parser":"~1.0.1"
-  },
-  "engines": {
-      "node": "0.6.12",
-      "npm": "1.1.4"
   }
 }
