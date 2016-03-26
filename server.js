@@ -4,8 +4,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var constants = require('./const')
 
-var db = 'mongodb://'+ constants.name +':'+ constants.pword +'@ds013738.mlab.com:13738/scavenger';
-/* var db = 'mongodb://localhost/scavenger' */
+var db = 'mongodb://'+ constants.name +':'+ constants.pword +'@ds023118.mlab.com:23118/scavenger';
+// var db = 'mongodb://localhost/scavenger' 
 
 mongoose.connect(db);
 // Express
