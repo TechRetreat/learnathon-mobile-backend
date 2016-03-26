@@ -8,7 +8,6 @@ var db = 'mongodb://'+ constants.name +':'+ constants.pword +'@ds023118.mlab.com
 // var db = 'mongodb://localhost/scavenger' 
 
 console.log('Connecting to ' + db);
-mongoose.connect(db);
 mongoose.connect(db, function(err) {
   if (err) throw err;
 });
