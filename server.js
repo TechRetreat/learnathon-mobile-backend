@@ -7,7 +7,12 @@ var constants = require('./const')
 var db = 'mongodb://'+ constants.name +':'+ constants.pword +'@ds023118.mlab.com:23118/scavenger';
 // var db = 'mongodb://localhost/scavenger' 
 
+console.log('Connecting to ' + db);
 mongoose.connect(db);
+mongoose.connect(db, function(err) {
+  if (err) throw err;
+});
+console.log('Connected to ' + db);
 // Express
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
